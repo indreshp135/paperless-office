@@ -29,6 +29,7 @@ router.post("/:fileHash", async (req, res) => {
 	const hash = await addFileIPFS(randomName, randomPath);
 	console.log(hash);
 	fs.unlinkSync(randomPath);
+	res.json(hash);
 });
 //QmeQgVkVPv3bGRFD3KLudAv6C5p2yxF7gNSRiKFpPn1GTw
 
