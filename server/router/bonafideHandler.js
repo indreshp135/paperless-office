@@ -8,7 +8,7 @@ const fs = require("fs");
 
 router.post("/", async (req, res) => {
 	const { name, rollno, year, course, dept, purpose } = req.body;
-	console.log(`Request to get bonafide ${JSON.stringify(req.body)}`);
+	console.log(`Request to get bonafide ${JSON.stringify(req)}`);
 	const dateNow = new Date();
 	const date =
 		dateNow.getDate().toString() +

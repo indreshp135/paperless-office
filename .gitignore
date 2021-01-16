@@ -2,3 +2,5 @@ node_modules
 wallet
 package-lock.json
 hyperledger
+config
+crypto-config
