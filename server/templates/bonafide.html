@@ -18,6 +18,7 @@
 
 		<title>Bonafide</title>
 	</head>
+
 	<body>
 		<div class="container text-center">
 			<h1>Name of institution</h1>
@@ -25,9 +26,10 @@
 		<div class="container text-center my-3">
 			<h2
 				style="
-					border: 1px solid black;
+					border: 2px solid violet;
 					font-family: 'Yeseva One', cursive;
 					text-align: center;
+					color: #d11706;
 				"
 			>
 				Bonafide Certificate
@@ -36,10 +38,10 @@
 
 		<div class="container my-5">
 			<p>
-				This is to certify that {{ user.name }} with register number
-				<strong>{{user.rollno }}</strong> is a student of {{ user.year}}
-				year {{user.course }} {{user.dept}}. This certificate is issued
-				on date {{ user.date }} for the purpose of {{user.purpose}}.
+				This is to certify that <strong>{{ user.name }}</strong> with register number
+				<strong>{{user.rollno }}</strong> is a student of <strong>{{ user.year}}</strong> 
+				year <strong>{{user.course}} {{user.dept}}</strong> . This certificate is issued
+				on date  <strong>{{ user.date }}</strong>  for the purpose of <strong> {{user.purpose}} </strong>.
 			</p>
 		</div>
 	</body>
