@@ -1,0 +1,82 @@
+{
+	"name": "test-network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "Administration",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"documentChannel": {
+			"peers": {
+				"peer0.administration.scheisse.edu": {},
+				"peer0.students.scheisse.edu": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Administration": {
+			"mspid": "AdministrationMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/keystore/589e3c356cc517adc85f3854860e2b707525c021484f786e786e3c1c1cdcd098_sk"
+			},
+			"peers": ["peer0.administration.scheisse.edu"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/signcerts/cert.pem"
+			}
+		},
+		"Students": {
+			"mspid": "StudentsMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/keystore/698e56a35b6a7ede4d6e2d77798bb0125a2d654e6b3ecfe64b4c908d020480ff_sk"
+			},
+			"peers": ["peer0.students.scheisse.edu"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/signcerts/cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.administration.scheisse.edu": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/peers/peer0.administration.scheisse.edu/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.administration.scheisse.edu:7051"
+		},
+		"peer0.students.scheisse.edu": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/peers/peer0.students.scheisse.edu/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.students.scheisse.edu:9051"
+		}
+	},
+	"orderers": {
+		"orderer.scheisse.edu": {
+		    "tlsCACerts": {
+				"path": "/tmp/crypto/ordererOrganizations/scheisse.edu/orderers/orderer.scheisse.edu/tls/ca.crt"
+			},
+		  "url": "grpcs://orderer.scheisse.edu:7050"
+		}
+	}
+}
