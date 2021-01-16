@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 		date,
 	});
 	console.log(`New PDF Generated: ${randomName} ${randomPath}`);
-	//Waiiting to Generate File
+	//Waiting to Generate File
 	await new Promise((r) => setTimeout(r, 3000));
 	const hash = await addFileIPFS(randomName, randomPath);
 
