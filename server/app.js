@@ -2,7 +2,7 @@ const express = require("express");
 const bonafideHandler = require("./router/bonafideHandler");
 const app = new express();
 
-const PORT = 8001;
+const PORT = 8000;
 
 // Body parser
 app.use(express.json());
