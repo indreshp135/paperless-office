@@ -8,11 +8,11 @@ const path = require('path');
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, "..",'..', 'blockchain', 'connection.json');
+        const ccpPath = path.resolve(__dirname, "../../blockchain/organizations/peerOrganizations/students.scheisse.edu/connection-students.json");
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new CA client for interacting with the CA.
-        const caInfo = ccp.certificateAuthorities['ca.example.com'];
+        const caInfo = ccp.certificateAuthorities['ca.sciesse.edu'];
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
@@ -35,7 +35,7 @@ async function main() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'Org1MSP',
+            mspId: 'StudentsMSP',
             type: 'X.509',
         };
         await wallet.put('admin', x509Identity);

@@ -1,5 +1,5 @@
 {
-	"name": "test-network",
+	"name": "first-network",
 	"version": "1.0.0",
 	"client": {
 		"tlsEnable": true,
@@ -19,7 +19,7 @@
 		}
 	},
 	"channels": {
-		"documentChannel": {
+		"documentchannel": {
 			"peers": {
 				"peer0.administration.scheisse.edu": {},
 				"peer0.students.scheisse.edu": {}
@@ -39,7 +39,7 @@
 		"Administration": {
 			"mspid": "AdministrationMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/keystore/589e3c356cc517adc85f3854860e2b707525c021484f786e786e3c1c1cdcd098_sk"
+				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/keystore/c7f57b8c3da5179b4afcda76e463cd18d5e78c2a8a5409170fbf10d7c15f042d_sk"
 			},
 			"peers": ["peer0.administration.scheisse.edu"],
 			"signedCert": {
@@ -49,7 +49,7 @@
 		"Students": {
 			"mspid": "StudentsMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/keystore/698e56a35b6a7ede4d6e2d77798bb0125a2d654e6b3ecfe64b4c908d020480ff_sk"
+				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/keystore/6a404a59449adaa705701606750ef66331cabbbfca1fdaf80527a87c7d7f1b20_sk"
 			},
 			"peers": ["peer0.students.scheisse.edu"],
 			"signedCert": {

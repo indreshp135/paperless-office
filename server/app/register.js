@@ -14,11 +14,11 @@ const path = require('path');
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, "..",'..', 'blockchain', 'connection.json');
+        const ccpPath = path.resolve(__dirname, "../../blockchain/organizations/peerOrganizations/students.scheisse.edu/connection-students.json");
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new CA client for interacting with the CA.
-        const caURL = ccp.certificateAuthorities['ca.example.com'].url;
+        const caURL = ccp.certificateAuthorities['ca.sciesse.edu'].url;
         const ca = new FabricCAServices(caURL);
 
         // Create a new file system based wallet for managing identities.
@@ -47,7 +47,7 @@ async function main() {
 
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
-            affiliation: 'org1.department1',
+            affiliation: 'students.department1',
             enrollmentID: 'appUser',
             role: 'client'
         }, adminUser);
@@ -60,7 +60,7 @@ async function main() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'Org1MSP',
+            mspId: 'StudentsMSP',
             type: 'X.509',
         };
         await wallet.put('appUser', x509Identity);
