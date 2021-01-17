@@ -23,7 +23,9 @@ export default function CreatePoll() {
         else{
             const body = JSON.stringify({name,rollno,year,dept,course,purpose});
             console.log(body)
-            axios.post(`${BACKEND}/tc`,body)
+            axios.post(`${BACKEND}/tc`,body,{headers: {
+                Authorization: `Bearer ${auth.token}`
+              }})
             .then((res)=>{
                 console.log(res)
             })

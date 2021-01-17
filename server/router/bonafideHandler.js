@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 		"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"BONAFIDE"]
 	}
 
-	var yourscript = exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
         (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);

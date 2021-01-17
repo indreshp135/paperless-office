@@ -25,23 +25,23 @@ class fileContract extends Contract {
         return k;
     }
 
-    async changeFile(ctx, fileId, hash) {
-        let detailsAsBytes = await ctx.stub.getState(fileId);
+    async changeFile(ctx, oldhash, newhash) {
+        let detailsAsBytes = await ctx.stub.getState(oldhash);
         if (!detailsAsBytes || detailsAsBytes.toString().length <= 0) {
             throw new Error('File with this Id does not exist: ');
         }
         let fileDetails = JSON.parse(detailsAsBytes.toString());
         let details = {
             ...fileDetails,
-            hash: hash,
+            hash: newhash,
             verified:true
         };
         const k = await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
         return k;
     }
 
-    async returnFile(ctx, fileId) {
-        let detailsAsBytes = await ctx.stub.getState(fileId);
+    async returnFile(ctx, hash) {
+        let detailsAsBytes = await ctx.stub.getState(hash);
         if (!detailsAsBytes || detailsAsBytes.toString().length <= 0) {
             throw new Error('File with this Id does not exist: ');
         }

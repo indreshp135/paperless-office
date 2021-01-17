@@ -4,8 +4,9 @@ const addFileIPFS = require("../helpers/addFileIPFS");
 const {sendEmail} = require("../helpers/sendEmail")
 const fs = require("fs");
 
-router.get("/:fileHash", async (req, res) => {
+router.get("/:fileHash/:fileId", async (req, res) => {
 	const { fileHash } = req.params;
+	const {user} = req.body
 	console.log(`File Hash recieved is: ${fileHash}`);
 
 	const randomName = crypto.randomBytes(10).toString("hex");
@@ -31,7 +32,51 @@ router.get("/:fileHash", async (req, res) => {
 	console.log(hash);
 	fs.unlinkSync(randomPath);
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", false);
+	const obj = {
+		"function":"addFile","Args":[`${fileHash}`,`${hash}`]
+	}
 
+	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+        (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            }
+		});
+	
+	const obj = {
+		"function":"addFile","Args":[`${hash}`]
+	}
+
+	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+		(error, stdout, stderr) => {
+			console.log(stdout);
+			console.log(stderr);
+			if (error !== null) {
+				console.log(`exec error: ${error}`);
+			}
+		});
+	
+	// args = [fileHash,hash];
+	// const output = await query.query(
+	// 	"mychannel",
+	// 	"mycc",
+	// 	args,
+	// 	"changeFile",
+	// 	username,
+	// 	"Org1"
+	// );
+
+	// args = [hash];
+	// const output = await query.query(
+	// 	"mychannel",
+	// 	"mycc",
+	// 	args,
+	// 	"returnFile",
+	// 	username,
+	// 	"Org1"
+	// );
 	res.json(hash);
 });
 //QmeQgVkVPv3bGRFD3KLudAv6C5p2yxF7gNSRiKFpPn1GTw // Test hash
