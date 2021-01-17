@@ -40,10 +40,10 @@
             var currentScript;
 
             function reqListener() {
-                document.getElementById(`${currentScript}Status`).style.display = 'none';
-                document.getElementById(`${currentScript}`).classList.add('btn-success').remove('btn-outline-secondary');
                 term.write('\x1bc') 
                 term.write(this.responseText.trim().replaceAll('\n', '\r\n'));
+                document.getElementById(`${currentScript}Status`).style.display = 'none';
+                // document.getElementById(`${currentScript}`).classList.add('btn-success').remove('btn-outline-secondary');
             }
 
             var scripts = [
