@@ -40,7 +40,7 @@ const query = async (
 
 		const contract = network.getContract(chaincodeName);
 		let result;
-
+		console.log(args)
 		if (
 			fcn == "queryFile" ||
 			fcn == "returnFile" ||
@@ -60,15 +60,16 @@ const query = async (
 				fcn,
 				args[0],
 				args[1],
-				args[2]
+				args[2],
+				args[3]
 			);
 		}
+		console.log(result.toString())
+		// console.log(
+		// 	`Transaction has been evaluated, result is: ${result.toString()}`
+		// );
 
-		console.log(
-			`Transaction has been evaluated, result is: ${result.toString()}`
-		);
-
-		result = JSON.parse(result.toString());
+		// result = JSON.parse(result.toString());
 		return result;
 	} catch (error) {
 		console.error(`Failed to evaluate transaction: ${error}`);

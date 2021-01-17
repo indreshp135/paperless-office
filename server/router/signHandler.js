@@ -4,7 +4,7 @@ const addFileIPFS = require("../helpers/addFileIPFS");
 const {sendEmail} = require("../helpers/sendEmail")
 const fs = require("fs");
 
-router.post("/:fileHash", async (req, res) => {
+router.get("/:fileHash", async (req, res) => {
 	const { fileHash } = req.params;
 	console.log(`File Hash recieved is: ${fileHash}`);
 

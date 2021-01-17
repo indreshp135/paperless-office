@@ -13,10 +13,7 @@ const Sentfiles = () => {
     React.useEffect(() => {
         const {data} =  axios.post(`${BACKEND}/admin/toverify`,{user:auth.user},{headers: {
             Authorization: `Bearer ${auth.token}`
-          }})
-        if(data){
-            setArray(data)
-        }
+          }}).then(res=>setArray(res.data))
     }, [auth])
     const change = async(e)=>{
         console.log(e.target.id)
@@ -33,7 +30,7 @@ const Sentfiles = () => {
         <Table striped >
         <thead className="light2"><tr><th><h4><u>{subject}</u></h4></th></tr></thead>
         <tbody>
-            {blockchainfiles&&blockchainfiles.map((blockchainfile,index)=>blockchainfile&&subject===blockchainfile.type?
+            {blockchainfiles.map((blockchainfile,index)=>blockchainfile&&subject===blockchainfile.type?
             <><tr><td><a className = "text-secondary" rel="noopener noreferrer" href ={`${IPFS}/${blockchainfile.hash}`} target="_blank" >{`${blockchainfile.hash}.pdf`}</a></td>
             <td><Button onClick={change} id={blockchainfile.hash}  variant="warning" className="right-it">
                 Verified Document Sign It and Send

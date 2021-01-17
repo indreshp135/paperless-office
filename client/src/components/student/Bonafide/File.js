@@ -7,10 +7,10 @@ import { BACKEND } from '../../../config';
 export default function CreatePoll() {
     const [msg,setmsg] = useState('');
     const user = useSelector(state=>state.user)
+    const auth = useSelector(state=>state.auth)
     const theme = user.theme;
     const [show,setShow] = useState(true)
     const Show = ()=> setShow(false)
-    const [name,setName] = useState('')
     const [rollno,setRollno] = useState('')
     const [year,setYear] = useState('')
     const [course,setCourse] = useState('')
@@ -18,13 +18,15 @@ export default function CreatePoll() {
     const [purpose,setPuropse] = useState('')
     const Submit = (e)=> {
         e.preventDefault()
-        if(name===''||rollno===''||year===''||course===''||dept===''||purpose==='')
+        if(rollno===''||year===''||course===''||dept===''||purpose==='')
             setmsg('Please Enter All The Fields')
         else{
-            const obj = {name,rollno,year,dept,course,purpose}
+            const obj = {name:auth.user,rollno,year,dept,course,purpose,username:auth.user}
             const body = JSON.stringify(obj);
             console.log(body)
-            axios.post(`${BACKEND}/bonafide`,obj)
+            axios.post(`${BACKEND}/bonafide`,obj,{headers: {
+                Authorization: `Bearer ${auth.token}`
+              }})
             .then((res)=>{
                 console.log(res)
             })
@@ -45,7 +47,7 @@ export default function CreatePoll() {
         :   
             <React.Fragment>
                 <br/>
-                <Input type="text" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
+                <Input type="text" placeholder="Name" value={auth.user}  readonly/>
                 <br/>
                 <Input type="text" placeholder="Rollno" onChange={(e)=>setRollno(e.target.value)}/>
                 <br/>
@@ -78,7 +80,7 @@ export default function CreatePoll() {
         :   
             <React.Fragment>
                 <br/>
-                <Input type="text" placeholder="Name" className="dark2 text-white" onChange={(e)=>setName(e.target.value)}/>
+                <Input type="text" placeholder="Name" className="dark2 text-white" value={auth.user} readonly/>
                 <br/>
                 <Input type="text" placeholder="Rollno" className="dark2 text-white" onChange={(e)=>setRollno(e.target.value)}/>
                 <br/>

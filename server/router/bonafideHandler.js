@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const createBonafide = require("../helpers/createBonafide");
-const { sendEmail } = require("../helpers/sendEmail");
+// const { sendEmail } = require("../helpers/sendEmail");
 const crypto = require("crypto");
 const addFileIPFS = require("../helpers/addFileIPFS");
-const { send } = require("process");
-const fs = require("fs");
+const query = require("../app/query")
+const { exec,execFile } = require('child_process');
+const shelljs =require("shelljs")
 
 router.post("/", async (req, res) => {
-	const { name, rollno, year, course, dept, purpose } = req.body;
-	console.log(`Request to get bonafide ${JSON.stringify(req)}`);
+	const {  rollno, year, course, dept, purpose,username,name  } = req.body;
+	console.log(req.body)
 	const dateNow = new Date();
 	const date =
 		dateNow.getDate().toString() +
@@ -34,6 +35,29 @@ router.post("/", async (req, res) => {
 
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", true);
 
+	const obj = {
+		"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"BONAFIDE"]
+	}
+
+	var yourscript = exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+        (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            }
+		});
+	
+	// args = [randomName,username,hash,"BONAFIDE"];
+	// const output = await query.query(
+	// 	"mychannel",
+	// 	"mycc",
+	// 	args,
+	// 	"addFile",
+	// 	username,
+	// 	"Org1"
+	// );
+	
 	res.json({ hash });
 });
 

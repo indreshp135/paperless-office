@@ -3,7 +3,8 @@ const { Contract } = require('fabric-contract-api')
 class fileContract extends Contract {
 
     async queryFile(ctx, fileId) {
-        let detailsAsBytes = await ctx.stub.getState(fileId);
+        console.log(fileId)
+        let detailsAsBytes = await ctx.stub.getState(fileId.toString());
         if (!detailsAsBytes || detailsAsBytes.toString().length <= 0) {
             throw new Error('File with this Id does not exist: ');
         }
@@ -12,15 +13,16 @@ class fileContract extends Contract {
     }
 
     async addFile(ctx, fileId, owner, hash, type) {
+        console.log(fileId,typeof fileId,owner,hash,type)
         let details = {
             owner,
             hash,
             with: 'Admin',
-            type:type,
+            type,
             verified:false
         };
-        await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
-        console.log('File added To the ledger Succesfully..');
+        const k = await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
+        return k;
     }
 
     async changeFile(ctx, fileId, hash) {
@@ -34,8 +36,8 @@ class fileContract extends Contract {
             hash: hash,
             verified:true
         };
-        await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
-        console.log('File returned Succesfully..');
+        const k = await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
+        return k;
     }
 
     async returnFile(ctx, fileId) {
@@ -48,8 +50,8 @@ class fileContract extends Contract {
             ...fileDetails,
             with: fileDetails.owner
         };
-        await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
-        console.log('File returned Succesfully..');
+        const k = await ctx.stub.putState(fileId, Buffer.from(JSON.stringify(details)));
+        return k;
     }
 
     async queryAllWithAdminVerified(ctx) {
@@ -116,10 +118,10 @@ class fileContract extends Contract {
         }
     }
 
-    async queryAllWithUserVerified(ctx,user='student') {
+    async queryAllWithUserVerified(ctx,user) {
         let queryString = {};
         queryString.selector = {};
-        queryString.selector.with = user;
+        queryString.selector.owner = user;
         queryString.selector.verified = true;
 
         let iterator = await ctx.stub.getQueryResult(JSON.stringify(queryString));
@@ -148,18 +150,18 @@ class fileContract extends Contract {
         }
     }
     
-    async queryAllWithUserNotVerified(ctx,user='student') {
+    async queryAllWithUserNotVerified(ctx,user) {
         let queryString = {};
         queryString.selector = {};
-        queryString.selector.with = user;
+        queryString.selector.owner = user;
         queryString.selector.verified = false;
-
+        console.log(user);
         let iterator = await ctx.stub.getQueryResult(JSON.stringify(queryString));
         let allResults = [];
         while (true) {
             let res = await iterator.next();
 
-            if (res.value && res.value.value.toString()) {
+            if (res.value &&  res.value.value.toString()) {
                 let jsonRes = {};
                 console.log(res.value.value.toString('utf8'));
                 jsonRes.Key = res.value.key;

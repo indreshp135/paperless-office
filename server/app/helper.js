@@ -38,9 +38,9 @@ const getCaUrl = async (org, ccp) => {
 const getWalletPath = async (org) => {
 	let walletPath;
 	if (org == "Org1") {
-		walletPath = path.join(process.cwd(), "../wallet");
+		walletPath = path.join(process.cwd(), "wallet");
 	} else if (org == "Org2") {
-		walletPath = path.join(process.cwd(), "../wallet");
+		walletPath = path.join(process.cwd(), "wallet");
 	} else return null;
 	return walletPath;
 };

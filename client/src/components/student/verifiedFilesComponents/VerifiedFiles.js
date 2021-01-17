@@ -13,10 +13,7 @@ const Sentfiles = () => {
     React.useEffect(() => {
         const {data} =  axios.post(`${BACKEND}/userall/sent`,{user:auth.user},{headers: {
             Authorization: `Bearer ${auth.token}`
-          }})
-        if(data){
-            setArray(data)
-        }
+          }}).then(res=>setArray(res.data))
     }, [auth])
     const subjects = ["BONAFIDE","TC"]
     const light=  subjects.map((subject)=>

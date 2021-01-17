@@ -3,8 +3,6 @@ const createTC = require("../helpers/createTC");
 const { sendEmail } = require("../helpers/sendEmail");
 const crypto = require("crypto");
 const addFileIPFS = require("../helpers/addFileIPFS");
-const { send } = require("process");
-const fs = require("fs");
 
 router.post("/", async (req, res) => {
 	const {
@@ -47,6 +45,7 @@ router.post("/", async (req, res) => {
 	const hash = await addFileIPFS(randomName, randomPath);
 
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", true);
+
 
 	res.json({ hash });
 });
