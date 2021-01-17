@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
 	await new Promise((r) => setTimeout(r, 3000));
 	const hash = await addFileIPFS(randomName, randomPath);
 
-	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com");
+	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", true);
 
 	res.json({ hash });
 });

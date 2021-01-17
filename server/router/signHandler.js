@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const crypto = require("crypto");
 const addFileIPFS = require("../helpers/addFileIPFS");
+const {sendEmail} = require("../helpers/sendEmail")
 const fs = require("fs");
 
 router.post("/:fileHash", async (req, res) => {
@@ -29,8 +30,10 @@ router.post("/:fileHash", async (req, res) => {
 	const hash = await addFileIPFS(randomName, randomPath);
 	console.log(hash);
 	fs.unlinkSync(randomPath);
+	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", false);
+
 	res.json(hash);
 });
-//QmeQgVkVPv3bGRFD3KLudAv6C5p2yxF7gNSRiKFpPn1GTw
+//QmeQgVkVPv3bGRFD3KLudAv6C5p2yxF7gNSRiKFpPn1GTw // Test hash
 
 module.exports = router;
