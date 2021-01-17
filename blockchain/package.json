@@ -1,0 +1,14 @@
+{
+  "name": "paperless-office",
+  "version": "0.0.1",
+  "description": "Paperless Office",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dockerode": "^3.2.1"
+  }
+}

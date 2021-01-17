@@ -1,11 +1,11 @@
 const certPem = "<PEM encoded certificate content>";
-const mspId = "Org1MSP"; // the msp Id for this org
+const mspId = "Students1MSP"; // the msp Id for this org
 
 const transactionProposal = {
 	fcn: "move",
 	args: ["a", "b", "100"],
-	chaincodeId: "mychaincodeId",
-	channelId: "mychannel",
+	chaincodeId: "records",
+	channelId: "documentchannel",
 };
 const { proposal, txId } = channel.generateUnsignedProposal(
 	transactionProposal,
