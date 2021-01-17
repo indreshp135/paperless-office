@@ -11,17 +11,12 @@ const getCCP = async (org) => {
 	if (org == "Students") {
 		ccpPath = path.resolve(
 			__dirname,
-			"..",
-			"..",
-			"blockchain",
-			"connection.json"
+			"../../blockchain/organizations/peerOrganizations/students.scheisse.edu/connection-students.json"
 		);
 	} else if (org == "Administration") {
 		ccpPath = path.resolve(
 			__dirname,
-			"..",
-			"config",
-			"connection-administration.json"
+			"../../blockchain/organizations/peerOrganizations/administration.scheisse.edu/connection-administration.json"
 		);
 	} else return null;
 	const ccpJSON = fs.readFileSync(ccpPath, "utf8");
@@ -31,16 +26,16 @@ const getCCP = async (org) => {
 
 const getCaUrl = async (org, ccp) => {
 	let caURL;
-	caURL = ccp.certificateAuthorities["ca.example.com"].url;
+	caURL = ccp.certificateAuthorities['ca.sciesse.edu'].url;
 	return caURL;
 };
 
 const getWalletPath = async (org) => {
 	let walletPath;
 	if (org == "Students") {
-		walletPath = path.join(process.cwd(), "../wallet");
+		walletPath = path.join(process.cwd(), "wallet");
 	} else if (org == "Administration") {
-		walletPath = path.join(process.cwd(), "../wallet");
+		walletPath = path.join(process.cwd(), "wallet");
 	} else return null;
 	return walletPath;
 };
@@ -132,7 +127,7 @@ const isUserRegistered = async (username, userOrg = "Students") => {
 const getCaInfo = async (org, ccp) => {
 	let caInfo;
 	if (org == "Students") {
-		caInfo = ccp.certificateAuthorities["ca.example.com"];
+		caInfo = ccp.certificateAuthorities["ca.sciesse.edu"];
 	} else return null;
 	return caInfo;
 };

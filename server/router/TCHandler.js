@@ -46,28 +46,28 @@ router.post("/", async (req, res) => {
 
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", true);
 
-	const obj = {
-		"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"TC"]
-	}
+	// const obj = {
+	// 	"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"TC"]
+	// }
 
-	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
-        (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            if (error !== null) {
-                console.log(`exec error: ${error}`);
-            }
-		});
+	// exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+    //     (error, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (error !== null) {
+    //             console.log(`exec error: ${error}`);
+    //         }
+	// 	});
 	
-	// args = [randomName,username,hash,"TC"];
-	// const output = await query.query(
-	// 	"mychannel",
-	// 	"mycc",
-	// 	args,
-	// 	"changeFile",
-	// 	username,
-	// 	"Org1"
-	// );
+	args = [randomName,username,hash,"TC"];
+	const output = await query.query(
+		"documentchannel",
+		"records",
+		args,
+		"changeFile",
+		username,
+		"Administration"
+	);
 	res.json({ hash });
 });
 

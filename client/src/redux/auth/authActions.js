@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BACKEND } from '../../config';
 import * as type from './authTypes';
 
-export const login = ({name,password}) => async(dispatch) =>{
+export const login = ({name,password,orgName}) => async(dispatch) =>{
   
     const config = {
         headers: {
@@ -10,7 +10,7 @@ export const login = ({name,password}) => async(dispatch) =>{
         }
     };
     
-    const body = JSON.stringify({ name, password });
+    const body = JSON.stringify({ name, password , orgName});
     await axios.post(`${BACKEND}/users/login`,body,config)
     .then(async(res)=>{
       if(res.data.success)
@@ -31,7 +31,7 @@ export const login = ({name,password}) => async(dispatch) =>{
     });
 }
 
-export const register = ({name,password})=>async(dispatch)=>{
+export const register = ({name,password,orgName})=>async(dispatch)=>{
     // Headers
     const config = {
         headers: {
@@ -40,7 +40,7 @@ export const register = ({name,password})=>async(dispatch)=>{
       };
     
       // Request body
-      const body = JSON.stringify({ name,password });
+      const body = JSON.stringify({ name,password,orgName});
       await axios.post(`${BACKEND}/users`, body, config)
         .then(async(res)=>{
             await dispatch({

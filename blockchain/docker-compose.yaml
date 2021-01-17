@@ -49,7 +49,7 @@ services:
       - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
       - ./organizations:/tmp/crypto
     ports:
-      - 8080:8080
+      - 9999:8080
     depends_on:
       explorerdb.scheisse.edu:
         condition: service_healthy

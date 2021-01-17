@@ -81,15 +81,16 @@ app.use((req, res, next) => {
 
 // Register and enroll user
 app.post("/users", async function (req, res) {
-	var username = req.body.name||"Admin";
-	var orgName = req.body.password||"Org1";
+	var username = req.body.name;
+	var password = req.body.password;
+	var orgName = req.body.orgName;
 	var token = jwt.sign(
 		{
 			exp:
 				Math.floor(Date.now() / 1000) +
 				18000,
 			username: username,
-			orgName: orgName,
+			password: password
 		},
 		app.get("secret")
 	);
@@ -103,51 +104,52 @@ app.post("/users", async function (req, res) {
 	}
 });
 
-// Register and enroll user
-app.post("/register", async function (req, res) {
-	var username = req.body.name||"Admin";
-	var orgName = req.body.password||"Admin";
-	var token = jwt.sign(
-		{
-			exp:
-				Math.floor(Date.now() / 1000) +
-				186400,
-			username: username,
-			orgName: orgName,
-		},
-		app.get("secret")
-	);
-	console.log(token);
+// // Register and enroll user
+// app.post("/register", async function (req, res) {
+// 	var username = req.body.name||"Admin";
+// 	var orgName = req.body.password||"Admin";
+// 	var token = jwt.sign(
+// 		{
+// 			exp:
+// 				Math.floor(Date.now() / 1000) +
+// 				186400,
+// 			username: username,
+// 			orgName: orgName,
+// 		},
+// 		app.get("secret")
+// 	);
+// 	console.log(token);
 
-	let response = await helper.registerAndGetSecret(username, "Students");
+// 	let response = await helper.registerAndGetSecret(username, "Students");
 
-	if (response && typeof response !== "string") {
-		response.token = token;
-		response.user = username;
-		res.json(response);
-	} else {
+// 	if (response && typeof response !== "string") {
+// 		response.token = token;
+// 		response.user = username;
+// 		res.json(response);
+// 	} else {
 
-		res.json({ success: false, message: response });
-	}
-});
+// 		res.json({ success: false, message: response });
+// 	}
+// });
 
 app.post("/users/login", async function (req, res) {
 	console.log(req.body)
 	var username = req.body.name;
-	var orgName = req.body.password;
+	var password = req.body.password;
+	var orgName = req.body.orgName;
 	var token = jwt.sign(
 		{
 			exp:
 				Math.floor(Date.now() / 1000) +180000,
 			username: username,
-			orgName: orgName,
+			password: password,
 		},
 		app.get("secret")
 	);
 
 	let isUserRegistered = await helper.isUserRegistered(
 		username,
-		(orgName = "Students")
+		orgName
 	);
 
 	if (isUserRegistered) {
@@ -155,7 +157,7 @@ app.post("/users/login", async function (req, res) {
 	} else {
 		res.json({
 			success: false,
-			message: `User with username ${username} is not registered with ORG1, Please register first.`,
+			message: `User with username ${username} is not registered with ${orgName}, Please register first.`,
 		});
 	}
 });
@@ -165,12 +167,12 @@ app.post("/admin/toverify", async(req, res) => {
 	username = req.body.user ;
 	console.log(username)
 	let output = await query.query(
-		"mychannel",
-		"mycc",
+		"documentchannel",
+		"records",
 		args,
 		"queryAllWithAdminNotVerified",
 		username,
-		"Students"
+		"Administration"
 	);
 	
 	const p = await output.toString()
@@ -190,12 +192,12 @@ app.post("/admin/signed", async (req, res) => {
 	args = [];
 	username = req.body.user ;
 	const output = await query.query(
-		"mychannel",
-		"mycc",
+		"documentchannel",
+		"records",
 		args,
 		"queryAllWithAdminVerified",
 		username,
-		"Students"
+		"Administration"
 	);
 	const p = await output.toString()
 	console.log(1,JSON.parse(p))
@@ -215,12 +217,12 @@ app.post("/userall/sent", async (req, res) => {
 	console.log(typeof username)
 	args = [username];
 	const output = await query.query(
-		"mychannel",
-		"mycc",
+		"documentchannel",
+		"records",
 		args,
 		"queryAllWithUserNotVerified",
 		username,
-		"Org1"
+		"Students"
 	);
 	console.log(1,output)
 	const p = output.toString()
@@ -239,12 +241,12 @@ app.post("/userall/recieved", async (req, res) => {
 	username = req.body.user ;
 	args = [username];
 	const output = await query.query(
-		"mychannel",
-		"mycc",
+		"documentchannel",
+		"records",
 		args,
 		"queryAllWithUserVerified",
 		username,
-		"Org1"
+		"Students"
 	);
 	const p = await output.toString()
 	console.log(1,JSON.parse(p))

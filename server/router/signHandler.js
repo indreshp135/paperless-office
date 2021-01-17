@@ -32,51 +32,51 @@ router.get("/:fileHash/:fileId", async (req, res) => {
 	console.log(hash);
 	fs.unlinkSync(randomPath);
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", false);
-	const obj = {
-		"function":"addFile","Args":[`${fileHash}`,`${hash}`]
-	}
+	// const obj = {
+	// 	"function":"addFile","Args":[`${fileHash}`,`${hash}`]
+	// }
 
-	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
-        (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            if (error !== null) {
-                console.log(`exec error: ${error}`);
-            }
-		});
+	// exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+    //     (error, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (error !== null) {
+    //             console.log(`exec error: ${error}`);
+    //         }
+	// 	});
 	
-	const obj = {
-		"function":"addFile","Args":[`${hash}`]
-	}
+	// const obj = {
+	// 	"function":"addFile","Args":[`${hash}`]
+	// }
 
-	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
-		(error, stdout, stderr) => {
-			console.log(stdout);
-			console.log(stderr);
-			if (error !== null) {
-				console.log(`exec error: ${error}`);
-			}
-		});
+	// exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+	// 	(error, stdout, stderr) => {
+	// 		console.log(stdout);
+	// 		console.log(stderr);
+	// 		if (error !== null) {
+	// 			console.log(`exec error: ${error}`);
+	// 		}
+	// 	});
 	
-	// args = [fileHash,hash];
-	// const output = await query.query(
-	// 	"mychannel",
-	// 	"mycc",
-	// 	args,
-	// 	"changeFile",
-	// 	username,
-	// 	"Org1"
-	// );
+	args = [fileHash, hash];
+	var output = await query.query(
+		"documentchannel",
+		"records",
+		args,
+		"changeFile",
+		username,
+		"Administration"
+	);
 
-	// args = [hash];
-	// const output = await query.query(
-	// 	"mychannel",
-	// 	"mycc",
-	// 	args,
-	// 	"returnFile",
-	// 	username,
-	// 	"Org1"
-	// );
+	args = [hash];
+	output = await query.query(
+		"documentchannel",
+		"records",
+		args,
+		"returnFile",
+		username,
+		"Administration"
+	);
 	res.json(hash);
 });
 //QmeQgVkVPv3bGRFD3KLudAv6C5p2yxF7gNSRiKFpPn1GTw // Test hash

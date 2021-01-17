@@ -18,7 +18,7 @@ export default function LoginForm() {
     const submitForm =async(e)=>
     {
       e.preventDefault();
-      const user = { name, password };
+      const user = { name, password, orgName: "Administration" };
       // Attempt to login
       await dispatch(login(user));
     }

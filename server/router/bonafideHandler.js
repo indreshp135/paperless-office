@@ -4,8 +4,6 @@ const createBonafide = require("../helpers/createBonafide");
 const crypto = require("crypto");
 const addFileIPFS = require("../helpers/addFileIPFS");
 const query = require("../app/query")
-const { exec,execFile } = require('child_process');
-const shelljs =require("shelljs")
 
 router.post("/", async (req, res) => {
 	const {  rollno, year, course, dept, purpose,username,name  } = req.body;
@@ -35,28 +33,28 @@ router.post("/", async (req, res) => {
 
 	sendEmail(hash, "vsanirudh2001@gmail.com", "vsanirudh2001@gmail.com", true);
 
-	const obj = {
-		"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"BONAFIDE"]
-	}
+	// const obj = {
+	// 	"function":"addFile","Args":[`${randomName}`,`${name}`,`${hash}`,"BONAFIDE"]
+	// }
 
-	exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
-        (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            if (error !== null) {
-                console.log(`exec error: ${error}`);
-            }
-		});
+	// exec(`../"shell scripts"/addFile.sh '${JSON.stringify(obj)}'`,
+    //     (error, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (error !== null) {
+    //             console.log(`exec error: ${error}`);
+    //         }
+	// 	});
 	
-	// args = [randomName,username,hash,"BONAFIDE"];
-	// const output = await query.query(
-	// 	"mychannel",
-	// 	"mycc",
-	// 	args,
-	// 	"addFile",
-	// 	username,
-	// 	"Org1"
-	// );
+	args = [randomName, username, hash, "BONAFIDE"];
+	const output = await query.query(
+		"documentchannel",
+		"records",
+		args,
+		"addFile",
+		username,
+		"Administration"
+	);
 	
 	res.json({ hash });
 });
