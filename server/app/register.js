@@ -47,13 +47,8 @@ async function main() {
 
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
-<<<<<<< HEAD
-            affiliation: 'org1.department1',
-            enrollmentID: 'student',
-=======
             affiliation: 'students.department1',
             enrollmentID: 'appUser',
->>>>>>> blockchain-revamp
             role: 'client'
         }, adminUser);
         const enrollment = await ca.enroll({

@@ -93,7 +93,7 @@ app.post("/users", async function (req, res) {
 		},
 		app.get("secret")
 	);
-	let response = await helper.getRegisteredUser(username, "Org1", true);
+	let response = await helper.getRegisteredUser(username, orgName, true);
 	if (response && typeof response !== "string") {
 		response.token = token;
 		response.user = username;
@@ -118,7 +118,8 @@ app.post("/register", async function (req, res) {
 		app.get("secret")
 	);
 	console.log(token);
-	let response = await helper.registerAndGerSecret(username, "Org1");
+
+	let response = await helper.registerAndGetSecret(username, "Students");
 
 	if (response && typeof response !== "string") {
 		response.token = token;
@@ -146,7 +147,7 @@ app.post("/users/login", async function (req, res) {
 
 	let isUserRegistered = await helper.isUserRegistered(
 		username,
-		(orgName = "Org1")
+		(orgName = "Students")
 	);
 
 	if (isUserRegistered) {
@@ -169,7 +170,7 @@ app.post("/admin/toverify", async(req, res) => {
 		args,
 		"queryAllWithAdminNotVerified",
 		username,
-		"Org1"
+		"Students"
 	);
 	
 	const p = await output.toString()
@@ -194,7 +195,7 @@ app.post("/admin/signed", async (req, res) => {
 		args,
 		"queryAllWithAdminVerified",
 		username,
-		"Org1"
+		"Students"
 	);
 	const p = await output.toString()
 	console.log(1,JSON.parse(p))

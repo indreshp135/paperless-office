@@ -1,18 +1,27 @@
-var Docker = require('dockerode');
 const { execSync } = require('child_process');
+const express = require("express");
+const app = new express();
+const expressWs = require('express-ws')(app);
 
-var docker = new Docker()
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.ws('/console', (ws, req) => {
+    process.stdout.on('data', (data) => ws.send(data.toString()));
+});
 
 const execScript = (script, args = "") => {
+    console.log(`scripts/${script}.sh ${args}`);
     try {
         let result = execSync(`scripts/${script}.sh ${args}`, {
             shell: '/bin/sh'
         });
         console.log(result.toString());
+        return (result.toString());
     } catch (e) {
-        console.log(e.stdout.toString());
-        console.log(e.stderr.toString());
-        console.log(e.toString());
+        console.log(e.toString())
+        return (e.stdout.toString() + e.toString());
     }
 }
 
@@ -84,29 +93,50 @@ const networkDown = () => {
     execScript('networkDown');
 }
 
-setEnv();
-// cleanup();
-// checkPrereqs();
-// cleanupOrgs();
-// createPeerOrg('Administration', 'administration', 'scheisse.edu', 7051, 7054);
-// createPeerOrg('Students', 'students', 'scheisse.edu', 9051, 8054);
-// createOrdererOrg('scheisse.edu');
-// createConsortium('TwoOrgsOrdererGenesis');
-// networkUp();
-// createChannel('documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, "TwoOrgsChannel");
-// joinChannel('documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051);
-// joinChannel('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051);
-// setAnchorPeer('documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051);
-// setAnchorPeer('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051);
-// deployChainCode('documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', '../chaincode/records')
-// deployChainCode('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', '../chaincode/records')
-// checkChainCodeCommitReadiness('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records')
-// approveChainCode('documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b');
-// approveChainCode('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b');
-// commitChainCode('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records');
-// queryCommitted('documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records');
-// networkDown();
-// cleanupOrgs();
-// cleanup();
+app.get('/', async (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+})
 
-// networkUp();
+app.get('/node_modules/xterm/css/xterm.css', async (req, res) => {
+    res.sendFile(__dirname + '/node_modules/xterm/css/xterm.css');
+})
+
+app.get('/node_modules/xterm/lib/xterm.js', async (req, res) => {
+    res.sendFile(__dirname + '/node_modules/xterm/lib/xterm.js');
+})
+
+const args = {
+    setenv: [],
+    cleanup: [],
+    checkPrereqs: [],
+    cleanupOrgs: [],
+    createPeerOrg_Admin: ['Administration', 'administration', 'scheisse.edu', 7051, 7054],
+    createPeerOrg_Students: ['Students', 'students', 'scheisse.edu', 9051, 8054],
+    createOrdererOrg: ['scheisse.edu'],
+    createConsortium: ['TwoOrgsOrdererGenesis'],
+    networkUp: [],
+    createChannel: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, "TwoOrgsChannel"],
+    joinChannel_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051],
+    joinChannel_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051],
+    setAnchorPeer: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051],
+    setAnchorPeer: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051],
+    deployChainCode_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', '../chaincode/records'],
+    deployChainCode_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', '../chaincode/records'],
+    checkChainCodeCommitReadiness: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
+    approveChainCode_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b'],
+    approveChainCode_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b'],
+    commitChainCode: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
+    queryCommitted: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
+    networkDown: []
+}
+
+app.get('/scripts/:script', (req, res) => {
+    var script = req.params.script;
+    console.log(script.split('_')[0]);
+    let result = execScript(script.split('_')[0], args[script]?.join(' ') ?? '');
+    res.send(result);
+})
+
+app.listen(3000, () => {
+	console.log(`App running on port: 3000`);
+});

@@ -58,8 +58,8 @@ const invokeTransaction = async (
 		let message;
 		if (
 			fcn === "createCar" ||
-			fcn === "createPrivateCarImplicitForOrg1" ||
-			fcn == "createPrivateCarImplicitForOrg2"
+			fcn === "createPrivateCarImplicitForStudents" ||
+			fcn == "createPrivateCarImplicitForAdministration"
 		) {
 			result = await contract.submitTransaction(
 				fcn,

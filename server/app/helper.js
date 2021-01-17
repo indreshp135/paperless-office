@@ -8,7 +8,7 @@ const util = require("util");
 
 const getCCP = async (org) => {
 	let ccpPath;
-	if (org == "Org1") {
+	if (org == "Students") {
 		ccpPath = path.resolve(
 			__dirname,
 			"..",
@@ -16,12 +16,12 @@ const getCCP = async (org) => {
 			"blockchain",
 			"connection.json"
 		);
-	} else if (org == "Org2") {
+	} else if (org == "Administration") {
 		ccpPath = path.resolve(
 			__dirname,
 			"..",
 			"config",
-			"connection-org2.json"
+			"connection-administration.json"
 		);
 	} else return null;
 	const ccpJSON = fs.readFileSync(ccpPath, "utf8");
@@ -37,19 +37,19 @@ const getCaUrl = async (org, ccp) => {
 
 const getWalletPath = async (org) => {
 	let walletPath;
-	if (org == "Org1") {
-		walletPath = path.join(process.cwd(), "wallet");
-	} else if (org == "Org2") {
-		walletPath = path.join(process.cwd(), "wallet");
+	if (org == "Students") {
+		walletPath = path.join(process.cwd(), "../wallet");
+	} else if (org == "Administration") {
+		walletPath = path.join(process.cwd(), "../wallet");
 	} else return null;
 	return walletPath;
 };
 
 const getAffiliation = async (org) => {
-	return org == "Org1" ? "org1.department1" : "org2.department1";
+	return org == "Students" ? "students.department1" : "administration.department1";
 };
 
-const getRegisteredUser = async (username, userOrg = "Org1", isJson) => {
+const getRegisteredUser = async (username, userOrg = "Students", isJson) => {
 	let ccp = await getCCP(userOrg);
 
 	const caURL = await getCaUrl(userOrg, ccp);
@@ -99,13 +99,13 @@ const getRegisteredUser = async (username, userOrg = "Org1", isJson) => {
 	});
 
 	let x509Identity;
-	if (userOrg == "Org1") {
+	if (userOrg == "Students") {
 		x509Identity = {
 			credentials: {
 				certificate: enrollment.certificate,
 				privateKey: enrollment.key.toBytes(),
 			},
-			mspId: "Org1MSP",
+			mspId: "StudentsMSP",
 			type: "X.509",
 		};
 	}
@@ -117,7 +117,7 @@ const getRegisteredUser = async (username, userOrg = "Org1", isJson) => {
 	return response;
 };
 
-const isUserRegistered = async (username, userOrg = "Org1") => {
+const isUserRegistered = async (username, userOrg = "Students") => {
 	const walletPath = await getWalletPath(userOrg);
 	const wallet = await Wallets.newFileSystemWallet(walletPath);
 	console.log(`Wallet path: ${walletPath}`);
@@ -131,7 +131,7 @@ const isUserRegistered = async (username, userOrg = "Org1") => {
 
 const getCaInfo = async (org, ccp) => {
 	let caInfo;
-	if (org == "Org1") {
+	if (org == "Students") {
 		caInfo = ccp.certificateAuthorities["ca.example.com"];
 	} else return null;
 	return caInfo;
@@ -163,22 +163,22 @@ const enrollAdmin = async (org, ccp) => {
 			enrollmentSecret: "adminpw",
 		});
 		let x509Identity;
-		if (org == "Org1") {
+		if (org == "Students") {
 			x509Identity = {
 				credentials: {
 					certificate: enrollment.certificate,
 					privateKey: enrollment.key.toBytes(),
 				},
-				mspId: "Org1MSP",
+				mspId: "StudentsMSP",
 				type: "X.509",
 			};
-		} else if (org == "Org2") {
+		} else if (org == "Administration") {
 			x509Identity = {
 				credentials: {
 					certificate: enrollment.certificate,
 					privateKey: enrollment.key.toBytes(),
 				},
-				mspId: "Org2MSP",
+				mspId: "AdministrationMSP",
 				type: "X.509",
 			};
 		}
@@ -193,7 +193,7 @@ const enrollAdmin = async (org, ccp) => {
 	}
 };
 
-const registerAndGerSecret = async (username, userOrg) => {
+const registerAndGetSecret = async (username, userOrg) => {
 	let ccp = await getCCP(userOrg);
 
 	const caURL = await getCaUrl(userOrg, ccp);
@@ -252,5 +252,5 @@ module.exports = {
 	getWalletPath: getWalletPath,
 	getRegisteredUser: getRegisteredUser,
 	isUserRegistered: isUserRegistered,
-	registerAndGerSecret: registerAndGerSecret,
+	registerAndGetSecret: registerAndGetSecret,
 };
