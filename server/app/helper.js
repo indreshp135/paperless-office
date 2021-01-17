@@ -26,7 +26,7 @@ const getCCP = async (org) => {
 
 const getCaUrl = async (org, ccp) => {
 	let caURL;
-	caURL = ccp.certificateAuthorities['ca.sciesse.edu'].url;
+	caURL = ccp.certificateAuthorities['ca.students.scheisse.edu'].url;
 	return caURL;
 };
 
@@ -38,10 +38,6 @@ const getWalletPath = async (org) => {
 		walletPath = path.join(process.cwd(), "wallet");
 	} else return null;
 	return walletPath;
-};
-
-const getAffiliation = async (org) => {
-	return org == "Students" ? "students.department1" : "administration.department1";
 };
 
 const getRegisteredUser = async (username, userOrg = "Students", isJson) => {
@@ -78,7 +74,6 @@ const getRegisteredUser = async (username, userOrg = "Students", isJson) => {
 	try {
 		secret = await ca.register(
 			{
-				affiliation: await getAffiliation(userOrg),
 				enrollmentID: username,
 				role: "client",
 			},
@@ -127,13 +122,12 @@ const isUserRegistered = async (username, userOrg = "Students") => {
 const getCaInfo = async (org, ccp) => {
 	let caInfo;
 	if (org == "Students") {
-		caInfo = ccp.certificateAuthorities["ca.sciesse.edu"];
+		caInfo = ccp.certificateAuthorities["ca.students.scheisse.edu"];
 	} else return null;
 	return caInfo;
 };
 
 const enrollAdmin = async (org, ccp) => {
-	console.log("calling enroll Admin method");
 
 	try {
 		const caInfo = await getCaInfo(org, ccp);
@@ -222,7 +216,6 @@ const registerAndGetSecret = async (username, userOrg) => {
 	try {
 		secret = await ca.register(
 			{
-				affiliation: await getAffiliation(userOrg),
 				enrollmentID: username,
 				role: "client",
 			},
