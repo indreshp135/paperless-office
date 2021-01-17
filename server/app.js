@@ -104,33 +104,33 @@ app.post("/users", async function (req, res) {
 	}
 });
 
-// // Register and enroll user
-// app.post("/register", async function (req, res) {
-// 	var username = req.body.name||"Admin";
-// 	var orgName = req.body.password||"Admin";
-// 	var token = jwt.sign(
-// 		{
-// 			exp:
-// 				Math.floor(Date.now() / 1000) +
-// 				186400,
-// 			username: username,
-// 			orgName: orgName,
-// 		},
-// 		app.get("secret")
-// 	);
-// 	console.log(token);
+// Register and enroll user
+app.post("/register", async function (req, res) {
+	var username = req.body.name||"Admin";
+	var orgName = req.body.password||"Admin";
+	var token = jwt.sign(
+		{
+			exp:
+				Math.floor(Date.now() / 1000) +
+				186400,
+			username: username,
+			orgName: orgName,
+		},
+		app.get("secret")
+	);
+	console.log(token);
 
-// 	let response = await helper.registerAndGetSecret(username, "Students");
+	let response = await helper.registerAndGetSecret(username, "Students");
 
-// 	if (response && typeof response !== "string") {
-// 		response.token = token;
-// 		response.user = username;
-// 		res.json(response);
-// 	} else {
+	if (response && typeof response !== "string") {
+		response.token = token;
+		response.user = username;
+		res.json(response);
+	} else {
 
-// 		res.json({ success: false, message: response });
-// 	}
-// });
+		res.json({ success: false, message: response });
+	}
+});
 
 app.post("/users/login", async function (req, res) {
 	console.log(req.body)
