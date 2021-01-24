@@ -22,7 +22,7 @@ async function main() {
         const ca = new FabricCAServices(caURL);
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
+        const walletPath = path.join(__dirname + '..', 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -47,7 +47,7 @@ async function main() {
 
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
-            enrollmentID: 'appUser',
+            enrollmentID: 'student',
             role: 'client'
         }, adminUser);
         const enrollment = await ca.enroll({

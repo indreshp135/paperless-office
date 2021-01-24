@@ -8,12 +8,12 @@ const util = require("util");
 
 const getCCP = async (org) => {
 	let ccpPath;
-	if (org == "Students") {
+	if (org === "Students") {
 		ccpPath = path.resolve(
 			__dirname,
 			"../../blockchain/organizations/peerOrganizations/students.scheisse.edu/connection-students.json"
 		);
-	} else if (org == "Administration") {
+	} else if (org === "Administration") {
 		ccpPath = path.resolve(
 			__dirname,
 			"../../blockchain/organizations/peerOrganizations/administration.scheisse.edu/connection-administration.json"
@@ -32,10 +32,10 @@ const getCaUrl = async (org, ccp) => {
 
 const getWalletPath = async (org) => {
 	let walletPath;
-	if (org == "Students") {
-		walletPath = path.join(process.cwd(), "wallet");
-	} else if (org == "Administration") {
-		walletPath = path.join(process.cwd(), "wallet");
+	if (org === "Students") {
+		walletPath = path.join(__dirname + '..', "wallet");
+	} else if (org === "Administration") {
+		walletPath = path.join(__dirname + '..', "wallet");
 	} else return null;
 	return walletPath;
 };
@@ -121,7 +121,7 @@ const isUserRegistered = async (username, userOrg = "Students") => {
 
 const getCaInfo = async (org, ccp) => {
 	let caInfo;
-	if (org == "Students") {
+	if (org === "Students") {
 		caInfo = ccp.certificateAuthorities["ca.students.scheisse.edu"];
 	} else return null;
 	return caInfo;
@@ -152,7 +152,7 @@ const enrollAdmin = async (org, ccp) => {
 			enrollmentSecret: "adminpw",
 		});
 		let x509Identity;
-		if (org == "Students") {
+		if (org === "Students") {
 			x509Identity = {
 				credentials: {
 					certificate: enrollment.certificate,

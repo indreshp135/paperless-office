@@ -123,8 +123,8 @@ const args = {
     deployChainCode_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', '../chaincode/records'],
     deployChainCode_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', '../chaincode/records'],
     checkChainCodeCommitReadiness: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
-    approveChainCode_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b'],
-    approveChainCode_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', 'records_1.0:bae2d7a41eb9a86e6265e1fb07dcc095978b12b9f4b1f1f392810ce2995b664b'],
+    approveChainCode_Admin: ['documentchannel', 'Administration', 'administration', 'scheisse.edu', 0, 7051, 'records', 'records_1.0:4dcd3828f89524ae793b9f50e9dc3bb3dfa7bc118d0f8585dcd0d486b5db6f98'],
+    approveChainCode_Students: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records', 'records_1.0:4dcd3828f89524ae793b9f50e9dc3bb3dfa7bc118d0f8585dcd0d486b5db6f98'],
     commitChainCode: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
     queryCommitted: ['documentchannel', 'Students', 'students', 'scheisse.edu', 0, 9051, 'records'],
     networkDown: []

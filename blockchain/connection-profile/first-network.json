@@ -39,7 +39,7 @@
 		"Administration": {
 			"mspid": "AdministrationMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/keystore/4d7a3ce62a6f82341eb57a66153406848a4aab7fdc21cc73e91faaf5f8496274_sk"
+				"path": "/tmp/crypto/peerOrganizations/administration.scheisse.edu/users/Admin@administration.scheisse.edu/msp/keystore/9c14403cb48d5847d7090c3d4a6f163aa44280d876e37f6e9ee4c60e660f7003_sk"
 			},
 			"peers": ["peer0.administration.scheisse.edu"],
 			"signedCert": {
@@ -49,7 +49,7 @@
 		"Students": {
 			"mspid": "StudentsMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/keystore/0284a018794c94953baeea71a0b64d1ddd38c948e92ab3f4776ea772b85b96fa_sk"
+				"path": "/tmp/crypto/peerOrganizations/students.scheisse.edu/users/Admin@students.scheisse.edu/msp/keystore/46e236f893a2b2dfbf78b5472a501ce25d9d57f278d6f09eae02d087ffa646d5_sk"
 			},
 			"peers": ["peer0.students.scheisse.edu"],
 			"signedCert": {
