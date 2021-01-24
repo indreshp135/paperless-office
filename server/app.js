@@ -107,14 +107,15 @@ app.post("/users", async function (req, res) {
 // Register and enroll user
 app.post("/register", async function (req, res) {
 	var username = req.body.name||"Admin";
-	var orgName = req.body.password||"Admin";
+	var password = req.body.password||"Admin";
+	var orgName = req.body.orgName;
 	var token = jwt.sign(
 		{
 			exp:
 				Math.floor(Date.now() / 1000) +
 				186400,
 			username: username,
-			orgName: orgName,
+			password: password
 		},
 		app.get("secret")
 	);
@@ -176,7 +177,7 @@ app.post("/admin/toverify", async(req, res) => {
 	);
 	
 	const p = await output.toString()
-	console.log(1,JSON.parse(p))
+	console.log(p);
 	const finalArray = [];
 	JSON.parse(p).forEach(o => {
 		const key = o.Key;

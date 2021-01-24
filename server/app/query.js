@@ -17,6 +17,7 @@ const query = async (
 
 		const walletPath = await helper.getWalletPath(org_name);
 		const wallet = await Wallets.newFileSystemWallet(walletPath);
+		
 		console.log(`Wallet path: ${walletPath}`);
 
 		let identity = await wallet.get(username);
